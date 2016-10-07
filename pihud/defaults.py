@@ -1,12 +1,10 @@
 
-
 from Config import Config
 from obd import commands as c
 
 
 #                         class_name  min  max  redline  scale_step  scale_mult  buffer_size
 fallback_default = Config("Text",     0,   100, None,    None,       1,          60)
-
 
 
 # dict of default configs where key=OBDCommand value=Config
@@ -29,10 +27,9 @@ defaults = {
     c.INTAKE_PRESSURE   : Config("Bar_Horizontal",    0,    255,    None,    None,       None,       None),
     # Commonly used sensor info
     c.RPM               : Config("Gauge",             0,    8000,   6750,    1000,       1000,       None),
-    c.SPEED             : Config("Gauge",             0,    180,    120,     20,         1,          None),
-    c.FUEL_LEVEL        : Config("Bar_Vertical"),     0,    100,    25,      None,       None,       None),
-    c.AMBIANT_AIR_TEMP  : Config("Text"),             -40,  215,    None,    None,       None,       None),
-    c.FUEL_RATE         : Config("Text"),             0,    99,     10,      None,       None,       None),
+    c.SPEED             : Config("Text",              0,    200,    80,      None,       None,       None),
+    c.AMBIANT_AIR_TEMP  : Config("Text",             -40,   215,    None,    None,       None,       None),
+    c.FUEL_RATE         : Config("Text",              0,    99,     10,      None,       None,       None),
     c.OBD_COMPLIANCE    : Config("Text",              None, None,   None,    None,       None,       None),
     c.RUN_TIME          : Config("Text",              None, None,   None,    None,       None,       None),
 }
