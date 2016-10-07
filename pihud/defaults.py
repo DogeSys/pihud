@@ -27,6 +27,7 @@ defaults = {
     c.LONG_FUEL_TRIM_2  : Config("Bar_Horizontal",    -100, 100,    None,    None,       None,       None),
     c.FUEL_PRESSURE     : Config("Bar_Horizontal",    0,    765,    None,    None,       None,       None),
     c.INTAKE_PRESSURE   : Config("Bar_Horizontal",    0,    255,    None,    None,       None,       None),
+    # Commonly used sensor info
     c.RPM               : Config("Gauge",             0,    8000,   6750,    1000,       1000,       None),
     c.SPEED             : Config("Gauge",             0,    180,    120,     20,         1,          None),
     c.FUEL_LEVEL        : Config("Bar_Vertical"),     0,    100,    25,      None,       None,       None),

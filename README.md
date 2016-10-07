@@ -17,7 +17,7 @@ After loging in, you will be presented with a terminal. Please install the follo
 ```shell
 sudo apt-get install python-qt4
 sudo apt-get install python-pip
-git clone https://github.com/brendan-w/piHud.git pihud
+git clone https://github.com/DogeSys/pihud pihud
 cd pihud/
 sudo python setup.py install
 ```
