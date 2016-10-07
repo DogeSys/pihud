@@ -1,8 +1,9 @@
-
 import os
 import sys
 import obd
 import shutil
+import subprocess
+import time
 from PiHud import PiHud
 from PyQt4 import QtGui
 from GlobalConfig import GlobalConfig
@@ -12,13 +13,10 @@ try:
 except:
     print "[pihud] Warning: RPi.GPIO library not found"
 
-
-
 # file paths
-running_dir         = os.path.dirname(os.path.realpath(__file__))
+running_dir = os.path.dirname(os.path.realpath(__file__))
 default_config_path = os.path.join(running_dir, 'default.rc')
-config_path         = os.path.join(os.path.expanduser('~'), 'pihud.rc')
-
+config_path = os.path.join(os.path.expanduser('~'), 'pihud.rc')
 
 
 def main():
@@ -39,7 +37,7 @@ def main():
     # =========================== OBD-II Connection ===========================
 
     if global_config["debug"]:
-        obd.logger.setLevel(obd.logging.DEBUG) # enables all debug information
+        obd.logger.setLevel(obd.logging.DEBUG)  # enables all debug information
 
     connection = obd.Async(global_config["port"])
 
@@ -60,16 +58,34 @@ def main():
         GPIO.setup(pin,
                    GPIO.IN,
                    pull_up_down=GPIO.PUD_UP)
-        GIO.add_event_detect(pin,
-                             GPIO.FALLING,
-                             callback=pihud.next_page,
-                             bouncetime=200)
+        GPIO.add_event_detect(pin,  # Adjusted this from GIO to GPIO, to resolve incorrect ref
+                              GPIO.FALLING,
+                              callback=pihud.next_page,
+                              bouncetime=200)
     except:
         pass
 
     # ================================= Start =================================
+    """This subroutine is used to create a new command and query, then using that routine, can determine
+        a shutdown condition that fits our needs"""
 
-    status = app.exec_() # blocks until application quit
+    def check_timeout():
+        timeout = time.time() + 3
+        if in_RPM == 0 & time.time() > timeout:
+            connection.close()
+            subprocess.call("./shutdown.sh", shell=True)
+            sys.exit()
+
+    cmd_RPM = obd.commands.RPM
+    in_RPM = connection.query(cmd_RPM)
+
+    # The simple logic gate, if there is a connection continously check the timout method
+    while connection.is_connected():
+        check_timeout()
+
+    # --------------------------------------------------------------------------
+
+    status = app.exec_()  # blocks until application quit
 
     # ================================= Exit ==================================
 
