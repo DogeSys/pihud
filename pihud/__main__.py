@@ -39,7 +39,7 @@ def main():
     if global_config["debug"]:
         obd.logger.setLevel(obd.logging.DEBUG)  # enables all debug information
 
-    connection = obd.Async(global_config["port"])
+    connection = obd.OBD()
 
     # if global_config["debug"]:
     #     for i in range(32):
