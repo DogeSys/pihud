@@ -53,7 +53,7 @@ def main():
     # ============================== GPIO Setup ===============================
 
     try:
-        pin = self.config.page_adv_pin
+        pin = pihud.config.page_adv_pin
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin,
                    GPIO.IN,
@@ -80,8 +80,8 @@ def main():
     in_RPM = connection.query(cmd_RPM)
 
     # The simple logic gate, if there is a connection continously check the timout method
-    while connection.is_connected():
-        check_timeout()
+    # while connection.is_connected():
+        # check_timeout()
 
     # --------------------------------------------------------------------------
 
